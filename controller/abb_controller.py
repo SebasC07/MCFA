@@ -1,6 +1,6 @@
 from model.pet import Pet
 from service import abb_service
-from fastapi import APIRouter,  Response, status
+from fastapi import APIRouter,  Response, status, HTTPException
 
 abb_service = abb_service.ABBService()
 
@@ -68,3 +68,22 @@ async def get_race_count():
 
     race_counts = abb_service.abb.root.list_race()
     return {"races": race_counts}
+
+# Ruta fija: reporte por ciudad y género
+@abb_route.get("/report_by_location_gender")
+async def report_by_location_gender():
+    try:
+        return abb_service.abb.report_by_location_gender()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al generar el reporte: {str(e)}")
+
+# Ruta dinámica: buscar mascota por ID
+@abb_route.get("/{id}")
+async def get_pet_by_id(id: int):
+    try:
+        pet = abb_service.abb.find(id)
+        if pet is None:
+            raise HTTPException(status_code=404, detail="Mascota no encontrada")
+        return pet
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al buscar la mascota: {str(e)}")

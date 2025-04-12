@@ -1,12 +1,12 @@
-    from model.abb import ABB
-    from model.pet import Pet
+from model.abb import ABB
+from model.pet import Pet
 
 
-    class ABBService():
-        def __init__(self):
-            self.abb = ABB()
-            # llenar ABB
+class ABBService():
+    def __init__(self):
+        self.abb = ABB()
+        # llenar ABB
 
-            self.abb.add(Pet(id=7,name="Lulu",age=13, race= "pastor"))
-            rocky = Pet(id=2,name="Rocky",age=5, race= "labrador")
-            self.abb.add(rocky)
+        self.abb.add(Pet(id=7,name="fiona",age=11, race= "criollo", location= "barrancabermeja", gender="hembra"))
+        firulais = Pet(id=2,name="firulais",age=5, race= "labrador", location="manizales", gender="macho")
+        self.abb.add(firulais)

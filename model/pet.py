@@ -1,11 +1,12 @@
 from pydantic import BaseModel
-from typing import Optional
 
 class Pet(BaseModel):
     id: int
     name: str
     age: int
     race: str
+    location: str
+    gender: str
 
     def __init__(self, **data):
         # Llamamos al constructor original de BaseModel
@@ -22,3 +23,9 @@ class Pet(BaseModel):
         # Validamos edad
         if not isinstance(self.age, int) or self.age <= 0:
             raise ValueError("La edad debe ser un número entero positivo")
+
+        if not self.location.replace(" ", "").isalpha():
+            raise ValueError("La ciudad solo puede tener letras y espacios")
+
+        if self.gender.lower() not in ["macho", "hembra"]:
+            raise ValueError("El género debe ser 'macho' o 'hembra'")

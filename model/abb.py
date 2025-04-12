@@ -29,6 +29,19 @@ class ABB():
         else:
             return self.root.delate(id)
 
+    def find(self, id: int):
+        if self.root is None:
+            raise Exception("El árbol está vacío")
+        return self.root.find(id)
+
+        # Reporte de Mascotas:
+
+    def report_by_location_gender(self):
+        if self.root == None:
+            return {}
+        report = self.root.report_by_location_gender()
+        return [{"location": ciudad, **datos} for ciudad, datos in report.items()]
+
 class NodeABB:
     def __init__(self, pet: Pet):
         self.pet = pet
@@ -113,8 +126,21 @@ class NodeABB:
                     nuevo_root = NodeABB(pet)
                 else:
                     nuevo_root.add(pet)
-
             return nuevo_root
+
+    def find(self, id: int):
+        if self.pet.id == id:
+            return self.pet
+        elif id < self.pet.id:
+            if self.left:
+                return self.left.find(id)
+            else:
+                raise Exception(f"No se encontró la mascota con ID {id}")
+        elif id > self.pet.id:
+            if self.right:
+                return self.right.find(id)
+            else:
+                raise Exception(f"No se encontró la mascota con ID {id}")
 
     def get_inorder(self):
         listPets = []
@@ -142,8 +168,6 @@ class NodeABB:
         listPets.append(self.pet)
         return listPets
 
-
-
     #Listar mascotas por raza
     def list_race(self, races=None):
         if races is None:
@@ -158,6 +182,31 @@ class NodeABB:
             self.right.list_race(races)
 
         return races
+
+        # Reporte de mascotas por ciudad:
+
+    def report_by_location_gender(self, report=None):
+        if report is None:
+            report = {}
+
+        location = self.pet.location
+        gender = self.pet.gender.lower()
+
+        if location not in report:
+            report[location] = {"total": 0, "machos": 0, "hembras": 0}
+
+        report[location]["total"] += 1
+        if gender == "macho":
+            report[location]["machos"] += 1
+        elif gender == "hembra":
+            report[location]["hembras"] += 1
+
+        if self.left:
+            self.left.report_by_location_gender(report)
+        if self.right:
+            self.right.report_by_location_gender(report)
+
+        return report
 
 class NodeAVL(NodeABB):
     def __init__(self, pet:Pet):
