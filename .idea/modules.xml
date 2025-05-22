@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/FastAPIPets.iml" filepath="$PROJECT_DIR$/.idea/FastAPIPets.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/TreeN2.iml" filepath="$PROJECT_DIR$/.idea/TreeN2.iml" />
+>>>>>>> 558fcee (Acrualizacion Proyecto)
     </modules>
   </component>
 </project>
